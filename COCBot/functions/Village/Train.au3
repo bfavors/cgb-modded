@@ -41,14 +41,6 @@ Func Train()
 		checkArmyCamp()
 	EndIf
 
-	If $barrackPos[0] = "" Then
-		Click($TopLeftClient[0], $TopLeftClient[1], 2, 250); Click away twice with 250ms delay
-		If _Sleep(500) Then Return
-		LocateBarrack()
-		SaveConfig()
-		If _Sleep(2000) Then Return
-	EndIf
-
 	SetLog("Training Troops...", $COLOR_BLUE)
 
 	If _Sleep(100) Then Return
@@ -57,36 +49,13 @@ Func Train()
 
 	If _Sleep(100) Then Return
 
-	Click($barrackPos[0], $barrackPos[1]) ;Click Barrack
+	Click(37, 524) ;Click Train Troops button
+	$page = 1
 
 	If _Sleep(500) Then Return
 
 
-	Local $TrainPos = _PixelSearch(155, 603, 694, 605, Hex(0x9C7C37, 6), 5) ;Finds Train Troops button
-	$icount = 0
-	while not IsArray($TrainPos)
-		If _Sleep(500) Then Return
-		$icount = $icount + 1
-		$TrainPos = _PixelSearch(155, 603, 694, 605, Hex(0x9C7C37, 6), 5) ;Finds Train Troops button
-		if $icount = 10 then ExitLoop
-	wend
-
-
-	If IsArray($TrainPos) = False Then
-		SetLog("Your Barrack is not available. (Upgrading? Locate another Barrack on the 'Misc' tab)", $COLOR_RED)
-		If _Sleep(500) Then Return
-		Return
-	Else
-		Click($TrainPos[0], $TrainPos[1]) ;Click Train Troops button
-		If _Sleep(500) Then Return
-		$icount = 0
-		while not isBarrack()
-			If _Sleep(500) Then Return
-			$icount += 1
-			if $icount = 10 then ExitLoop
-		wend
-		if not $fullArmy then CheckFullArmy()  ;if armycamp not full, check full by barrack
-	Endif
+	if not $fullArmy then CheckFullArmy()  ;if armycamp not full, check full by barrack
 
 	Local $NextPos = _PixelSearch(749, 333, 787, 349, Hex(0xF08C40, 6), 5)
     Local $PrevPos = _PixelSearch(70, 336, 110, 351, Hex(0xF08C40, 6), 5)
@@ -132,12 +101,15 @@ Func Train()
 	endif
 	Local $iBarrHere
 	$iBarrHere = 0
-	while (isBarrack() and ($isNormalBuild or (_GUICtrlComboBox_GetCurSel($cmbTroopComp) = 8)))
+
+	while (isBarrack($page) and ($isNormalBuild or (_GUICtrlComboBox_GetCurSel($cmbTroopComp) = 8)))
 		If IsArray($NextPos) Then Click($NextPos[0], $NextPos[1]) ;click next button
+		$page += 1
+		If $page == 9 Then $page = 1
 		$iBarrHere += 1
 		If _Sleep(500) Then ExitLoop
 		$icount = 0
-		while not isBarrack()
+		while not isBarrack($page)
 			If _Sleep(100) Then ExitLoop
 			$icount = $icount + 1
 			if $icount = 5 then ExitLoop
@@ -146,7 +118,9 @@ Func Train()
 	wend
 
 	if $isNormalBuild or (_GUICtrlComboBox_GetCurSel($cmbTroopComp) = 8) then
-		If IsArray($PrevPos) Then Click($PrevPos[0], $PrevPos[1]) ;click prev button
+		If IsArray($NextPos) Then Click($NextPos[0], $NextPos[1]) ;click next button
+		$page += 1
+		If $page == 9 Then $page = 1
 		If _Sleep(1000) Then return
 	endif
 
@@ -231,7 +205,7 @@ Func Train()
 
 	$brrNum = 0
 	if _GUICtrlComboBox_GetCurSel($cmbTroopComp) = 8 then
-		while isBarrack()
+		while isBarrack($page)
 			_CaptureRegion()
 			if $FirstStart then
 				$icount = 0
@@ -268,13 +242,15 @@ Func Train()
 			EndSwitch
 
 		    If _Sleep(500) Then ExitLoop
-			 Click($PrevPos[0], $PrevPos[1]) ;click prev button
+			 Click($NextPos[0], $NextPos[1]) ;click next button
+			$page += 1
+			If $page == 9 Then $page = 1
 			 If $brrNum >= 4 Then ExitLoop ; make sure no more infiniti loop
 			 If _Sleep(1000) Then ExitLoop
 			;endif
 		wend
 	else
-		while isBarrack() and $isNormalBuild
+		while isBarrack($page) and $isNormalBuild
 			$brrNum += 1
 			if $fullArmy or $FirstStart then
 				$icount = 0
@@ -383,10 +359,12 @@ Func Train()
 				endif
 			endif
 
-		   Click($PrevPos[0], $PrevPos[1]) ;click prev button
+			 Click($NextPos[0], $NextPos[1]) ;click next button
+			$page += 1
+			If $page == 9 Then $page = 1
 		   If _Sleep(500) Then ExitLoop
 			$icount = 0
-			while not isBarrack()
+			while not isBarrack($page)
 				If _Sleep(200) Then ExitLoop
 				$icount = $icount + 1
 				if $icount = 5 then ExitLoop
@@ -402,13 +380,15 @@ Func Train()
 		$iBarrHere = 0
 		$brrDarkNum = 0
 		while 1
-			If IsArray($PrevPos) Then Click($PrevPos[0], $PrevPos[1]) ;click prev button
+			If IsArray($NextPos) Then Click($NextPos[0], $NextPos[1]) ;click next button
+			$page += 1
+			If $page == 9 Then $page = 1
 			$iBarrHere += 1
 			If _Sleep(1000) Then ExitLoop
-			if(isDarkBarrack() or $iBarrHere = 5) then ExitLoop
+			if(isDarkBarrack($page) or $iBarrHere = 5) then ExitLoop
 		wend
 
-		while isDarkBarrack()
+		while isDarkBarrack($page)
 			$brrDarkNum += 1
 ;~ 			; SetLog("====== Barrack: " & $brrDarkNum & " ======", $COLOR_PURPLE)
 			if StringInStr($sBotDll, "CGBPlugin.dll") < 1 then
@@ -506,11 +486,13 @@ Func Train()
 				TrainIt($eMini, 6)
 			endif
 
-			If IsArray($PrevPos) Then Click($PrevPos[0], $PrevPos[1]) ;click prev button
+			If IsArray($NextPos) Then Click($NextPos[0], $NextPos[1]) ;click next button
+			$page += 1
+			If $page == 9 Then $page = 1
 
 		   If _Sleep(500) Then ExitLoop
 			$icount = 0
-			while not isDarkBarrack()
+			while not isDarkBarrack($page)
 				If _Sleep(200) Then ExitLoop
 				$icount = $icount + 1
 				if $icount = 5 then ExitLoop
@@ -529,14 +511,16 @@ Func Train()
 
   If GUICtrlRead($chkLightSpell) = $GUI_CHECKED Then
       $iBarrHere = 0
-      while not isSpellFactory()
-			If IsArray($PrevPos) Then Click($PrevPos[0], $PrevPos[1]) ;click prev button
+      while not isSpellFactory($page)
+			If IsArray($NextPos) Then Click($NextPos[0], $NextPos[1]) ;click next button
+			$page += 1
+			If $page == 9 Then $page = 1
 			$iBarrHere += 1
 			If _Sleep(1000) Then ExitLoop
 			If $iBarrHere = 7 then ExitLoop
 	  wend
 
-		if isSpellFactory() then
+		if isSpellFactory($page) then
 			SetLog("Create Lightning Spell", $COLOR_BLUE)
 			Local $x = 0
 			While 1
