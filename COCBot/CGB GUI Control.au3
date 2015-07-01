@@ -285,13 +285,6 @@ Func btnAttackNow()
 		Else
 			$ichkAtkNowLSpell = 0
 		EndIf
-	Else
-		$RunState = True
-		ZoomOut()
-		SetLog(_PadStringCenter(" Attack Now! ", 50, "="), $COLOR_ORANGE)
-		PrepareAttack()
-		Attack()
-		$RunState = False
 	EndIf
 EndFunc   ;==>btnAttackNow
 

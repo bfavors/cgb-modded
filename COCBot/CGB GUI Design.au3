@@ -88,17 +88,19 @@ Local $x = 15, $y = 590
 		GUICtrlSetState(-1, $GUI_UNCHECKED)
 	$btnAttackNow = GUICtrlCreateButton("Attack!", $x + 195, $y + 2, 50, 20, $BS_MULTILINE)
 		GUICtrlSetOnEvent(-1, "btnAttackNow")
+		GUICtrlSetState(-1, $GUI_HIDE)
 	$cmbAtkNowDeploy = GUICtrlCreateCombo("", $x + 195, $y + 22, 50, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 		GUICtrlSetData(-1, "1 side|2 side|3 side|4 side", "4 side")
+ 		GUICtrlSetState(-1, $GUI_HIDE)
 	$chkAtkNowMines = GUICtrlCreateCheckbox("Pumps", $x + 195, $y + 43, 50, 20)
+ 		GUICtrlSetState(-1, $GUI_HIDE)
 	$chkAtkNowLSpell = GUICtrlCreateCheckbox("LSpell", $x + 195, $y + 60, 50, 20)
+ 		GUICtrlSetState(-1, $GUI_HIDE)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 	$pic2arrow = GUICtrlCreatePic(@ScriptDir & "\Icons\2arrow.jpg", $x + 187, $y +10, 50, 45)
- 		GUICtrlSetState(-1, $GUI_HIDE)
 	$lblVersion = GUICtrlCreateLabel($sBotVersion, 205, $y + 60, 60, 17, $SS_CENTER)
 		GUICtrlSetColor(-1, $COLOR_MEDGRAY)
- 		GUICtrlSetState(-1, $GUI_HIDE)
 
 ;~ Village
 Local $x = 290, $y = 600
