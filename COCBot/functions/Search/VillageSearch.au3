@@ -146,7 +146,7 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 		If _ColorCheck(_GetPixelColor(28, 32, True), Hex(0x5A5F60, 6), 10) Then
 			$msg = "Waiting for Attack Now"
 			SetLog(_PadStringCenter($msg, 50, "~"), $COLOR_ORANGE)
-			TrayTip($msg, 0)
+			TrayTip($sBotTitle, $msg, $TIP_ICONEXCLAMATION)
 			If _Sleep(1000 * 10) Then
 				If $bBtnAttackNowPressed = True Then ExitLoop
 			EndIf
