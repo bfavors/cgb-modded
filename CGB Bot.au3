@@ -295,5 +295,5 @@ EndFunc   ;==>AttackMain
 
 Func Attack() ;Selects which algorithm
 	SetLog(" ====== Start Attack ====== ", $COLOR_GREEN)
-	algorithm_AllTroops()
+	Barch()
 EndFunc   ;==>Attack
