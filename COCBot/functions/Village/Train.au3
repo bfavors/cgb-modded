@@ -203,10 +203,19 @@ Func Train()
 		assign(("troopSecond" & $TroopDarkName[$i]) , 0)
 	next
 
+	If Not $fullArmy And _ColorCheck(_GetPixelColor(403, 154, True), Hex(0xE84E50, 6), 10) Then
+		$fullArmy = True
+	EndIf
+
 	$brrNum = 0
 	if _GUICtrlComboBox_GetCurSel($cmbTroopComp) = 8 then
-		while isBarrack($page)
+		while not $fullArmy And isBarrack($page)
 			_CaptureRegion()
+
+			If Not $fullArmy And _ColorCheck(_GetPixelColor(403, 154), Hex(0xE84E50, 6), 10) Then
+				$fullArmy = True
+			EndIf
+
 			if $FirstStart then
 				$icount = 0
 				while not _ColorCheck(_GetPixelColor(496, 197, True), Hex(0xE0E4D0, 6), 20)
