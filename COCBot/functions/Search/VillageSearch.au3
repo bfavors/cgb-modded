@@ -143,14 +143,16 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 
 		Local $msg = "Not a Dead Base"
 
-		If _ColorCheck(_GetPixelColor(28, 32, True), Hex(0x5A5F60, 6), 10) Then
-			$msg = "Waiting for Attack Now"
-			SetLog(_PadStringCenter($msg, 50, "~"), $COLOR_ORANGE)
-			TrayTip($sBotTitle, $msg, $TIP_ICONEXCLAMATION)
-			If _Sleep(1000 * 20) Then
+	      For $i = 0 To 15
+			If _ColorCheck(_GetPixelColor(28, 32, True), Hex(0x5A5F60, 6), 10) Then
+				$msg = "Waiting for Attack Now"
+				SetLog(_PadStringCenter($msg, 50, "~"), $COLOR_ORANGE)
+				TrayTip($sBotTitle, $msg, $TIP_ICONEXCLAMATION)
+				If _Sleep(1000) Then ExitLoop
 				If $bBtnAttackNowPressed = True Then ExitLoop
 			EndIf
-		EndIf
+	      Next
+			If $bBtnAttackNowPressed = True Then ExitLoop
 		
 		SetLog(_PadStringCenter($msg, 50, "~"), $COLOR_ORANGE)
 		Click(825, 527) ;Click Next
