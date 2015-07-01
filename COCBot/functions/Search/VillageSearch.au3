@@ -141,124 +141,26 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 			If CheckZoomOut() = False Then Return
 		EndIf
 
-		If CompareResources() Then
-			If $bBtnAttackNowPressed = True Then ExitLoop
-			If $iradAttackMode = 0 Or $iradAttackMode = 1 Then
-				If checkDeadBase() Then
-					SetLog(_PadStringCenter(" Dead Base Found! ", 50, "~"), $COLOR_GREEN)
-					ExitLoop
-				EndIf
-				Local $msg = "Not a Dead Base"
-				If $OptBullyMode = 1 And ($SearchCount >= $ATBullyMode) Then
-					If $SearchTHLResult = 1 Then
-						SetLog(_PadStringCenter(" Not a Dead Base, but TH Bully Level Found! ", 50, "~"), $COLOR_GREEN)
-						ExitLoop
-					Else
-						If $bBtnAttackNowPressed = True Then ExitLoop
-						$msg &= ", Not TH Bully Level"
-					EndIf
-				EndIf
-				If $OptTrophyMode = 1 Then ;Enables Triple Mode Settings
-					If SearchTownHallLoc() Then
-						SetLog(_PadStringCenter(" Not a Dead Base, but TH Outside Found! ", 50, "~"), $COLOR_GREEN)
-						ExitLoop
-					Else
-						If $bBtnAttackNowPressed = True Then ExitLoop
-						$msg &= ", Not TH Outside!"
-					EndIf
-				EndIf
-				If $iradAttackMode = 1 Then
-					_WinAPI_DeleteObject($hBitmapFirst)
-					$hBitmapFirst = _CaptureRegion2()
-					Local $resultHere = DllCall($LibDir & "\CGBfunctions.dll", "str", "CheckConditionForWeakBase", "ptr", $hBitmapFirst, "int", ($iWBMortar + 1), "int", ($iWBWizTower + 1), "int", 10)
-					If $resultHere[0] = "Y" Then
-						SetLog(_PadStringCenter(" Weak Base Found! ", 50, "~"), $COLOR_GREEN)
-						ExitLoop
-					Else
-						If $bBtnAttackNowPressed = True Then ExitLoop
-						$msg &= ", Not a Weak Base"
-					EndIf
-				EndIf
-				If $DESideEnable = 1 Then
-					If checkDESideResources() = True Then
-						SetLog("DE Side Base Found Found Attacking NOW", $COLOR_BLUE)
-						$FoundDarkSideAtk = 1
-						ExitLoop
-					EndIf
-			   EndIf
-				;If _Sleep(1000) Then Return
-				If $bBtnAttackNowPressed = True Then ExitLoop
-				; Zap And Run
-				If $OptZapAndRun = 1 And $LSpellQ >= $iLSpellQ Then
-					If (Number($searchDark) >= Number($SpellMinDarkStorage)) Then
-						$zapandrunAvoidAttack = 1
-						SetLog(_PadStringCenter(" Zap and Run base Found!", 50, "~"), $COLOR_GREEN)
-						ExitLoop
-					EndIf
-				Endif
-				SetLog(_PadStringCenter($msg, 50, "~"), $COLOR_ORANGE)
-				Click(825, 527) ;Click Next
-				$iSkipped = $iSkipped + 1
-				GUICtrlSetData($lblresultvillagesskipped, GUICtrlRead($lblresultvillagesskipped) + 1)
-				ContinueLoop
-			Else
-				ExitLoop ; attack Allbase
-			EndIf
-		ElseIf $OptTrophyMode = 1 Then ;Enables Triple Mode Settings ;---compare resources
-			If SearchTownHallLoc() Then ; attack this base anyway because outside TH found to snipe
-				SetLog(_PadStringCenter(" TH Outside Found! ", 50, "~"), $COLOR_GREEN)
-				ExitLoop
-			Else
-				; break every 10 searches when Snipe While Train MOD is activated
-				If $isSnipeWhileTrain And $iSkipped > 18 Then
-					Click(62, 519) ; Click End Battle to return home
-					$haltSearch = True ; To Prevent Initiation of Attack
-					ExitLoop
-				EndIf
-				;If _Sleep(1000) Then Return
-				If $bBtnAttackNowPressed = True Then ExitLoop
-				Click(825, 527) ;Click Next
-				$iSkipped = $iSkipped + 1
-				GUICtrlSetData($lblresultvillagesskipped, GUICtrlRead($lblresultvillagesskipped) + 1)
-				ContinueLoop
-			EndIf
+		Local $msg = "Not a Dead Base"
 
-		Else
-			If $DESideEnable = 1 Then
-				If checkDESideResources()= True Then
-					SetLog("DE Side Base Found Found Attacking NOW", $COLOR_BLUE)
-					$FoundDarkSideAtk = 1
-					ExitLoop
-				EndIf
+		If _ColorCheck(_GetPixelColor(28, 32, True), Hex(0x5A5F60, 6), 10) Then
+			$msg = "Waiting for Attack Now"
+			SetLog(_PadStringCenter($msg, 50, "~"), $COLOR_ORANGE)
+			TrayTip($msg, 0)
+			If _Sleep(1000 * 10) Then
+				If $bBtnAttackNowPressed = True Then ExitLoop
 			EndIf
-			; Zap And Run
-			If $OptZapAndRun = 1 And $LSpellQ >= $iLSpellQ Then
-				If (Number($searchDark) >= Number($SpellMinDarkStorage)) Then
-					$zapandrunAvoidAttack = 1
-					SetLog(_PadStringCenter(" Zap and Run base Found!", 50, "~"), $COLOR_GREEN)
-					ExitLoop
-				EndIf
-			EndIf
-			;If _Sleep(1000) Then Return
-			If $bBtnAttackNowPressed = True Then ExitLoop
-			Click(825, 527) ;Click Next
-			$iSkipped = $iSkipped + 1
-			GUICtrlSetData($lblresultvillagesskipped, GUICtrlRead($lblresultvillagesskipped) + 1)
-			ContinueLoop
 		EndIf
+		
+		SetLog(_PadStringCenter($msg, 50, "~"), $COLOR_ORANGE)
+		Click(825, 527) ;Click Next
+		$iSkipped = $iSkipped + 1
+		GUICtrlSetData($lblresultvillagesskipped, GUICtrlRead($lblresultvillagesskipped) + 1)
+		ContinueLoop
 	WEnd
 
 	If $bBtnAttackNowPressed = True Then
 		Setlog(_PadStringCenter(" JVS MOD v1.1 Attack Now Pressed! ", 50, "~"), $COLOR_GREEN)
-	EndIf
-
-	If $iChkAttackNow = 1 Then
-		GUICtrlSetState($btnAttackNow, $GUI_HIDE)
-		GUICtrlSetState($cmbAtkNowDeploy, $GUI_HIDE)
-		GUICtrlSetState($chkAtkNowMines, $GUI_HIDE)
-		GUICtrlSetState($chkAtkNowLSpell, $GUI_HIDE)
-		GUICtrlSetState($pic2arrow, $GUI_SHOW)
-		GUICtrlSetState($lblVersion, $GUI_SHOW)
 	EndIf
 
 	If GUICtrlRead($chkAlertSearch) = $GUI_CHECKED And $haltSearch = False Then
