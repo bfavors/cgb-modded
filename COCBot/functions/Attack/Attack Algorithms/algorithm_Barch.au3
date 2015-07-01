@@ -32,9 +32,22 @@ Func Barch() ;Attack Algorithm for Barch
 			EndIf
 		Next
 
+		$Barb = 0
+		$Arch = 1
+
 		If _Sleep(500) Then ExitLoop
-		Switch $deploySettings
-			Case 0 ;Two sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+		Local $nbSides = 0
+		If $bBtnAttackNowPressed = True Then
+			$nbSides = ($icmbAtkNowDeploy + 1)
+		ElseIf $FoundDarkSideAtk = 1 Then
+			$nbSides = 1
+		Else
+			$nbSides = ($deploySettings + 1)
+		EndIf
+		SetLog("~Attacking from " & $nbSides)
+		Switch $nbSides
+			Case 2 ;Two sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				SetLog("~Attacking from two sides...")
 				If _Sleep(1000) Then ExitLoop
 				Local $numBarbPerSpot = Ceiling((($atkTroops[$Barb][1] / 2) / 5) / 2)
@@ -81,7 +94,7 @@ Func Barch() ;Attack Algorithm for Barch
 				dropHeroes($TopLeft[3][0], $TopLeft[3][1], $King, $Queen)
 				If _Sleep(1000) Then ExitLoop
 				dropCC($TopLeft[3][0], $TopLeft[3][1], $CC)
-			Case 1 ;Three sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			Case 3 ;Three sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				SetLog("~Attacking from three sides...")
 				If _Sleep(1000) Then ExitLoop
 				Local $numBarbPerSpot = Ceiling((($atkTroops[$Barb][1] / 3) / 5) / 2)
@@ -132,7 +145,7 @@ Func Barch() ;Attack Algorithm for Barch
 				dropHeroes($TopRight[3][0], $TopRight[3][1], $King, $Queen)
 				If _Sleep(1000) Then ExitLoop
 				dropCC($TopRight[3][0], $TopRight[3][1], $CC)
-			Case 2 ;Four sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			Case 4 ;Four sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				SetLog("~Attacking from all sides...")
 				If _Sleep(1000) Then ExitLoop
 				Local $numBarbPerSpot = Ceiling((($atkTroops[$Barb][1] / 4) / 5) / 2)
