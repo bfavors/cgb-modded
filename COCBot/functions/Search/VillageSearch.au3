@@ -147,7 +147,7 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 			$msg = "Waiting for Attack Now"
 			SetLog(_PadStringCenter($msg, 50, "~"), $COLOR_ORANGE)
 			TrayTip($sBotTitle, $msg, $TIP_ICONEXCLAMATION)
-			If _Sleep(1000 * 10) Then
+			If _Sleep(1000 * 20) Then
 				If $bBtnAttackNowPressed = True Then ExitLoop
 			EndIf
 		EndIf
