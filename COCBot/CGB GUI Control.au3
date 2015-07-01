@@ -285,6 +285,10 @@ Func btnAttackNow()
 		Else
 			$ichkAtkNowLSpell = 0
 		EndIf
+	Else
+		SetLog(_PadStringCenter(" Attack Now! ", 50, "="), $COLOR_ORANGE)
+		PrepareAttack()
+		Attack()
 	EndIf
 EndFunc   ;==>btnAttackNow
 
