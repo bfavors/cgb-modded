@@ -3,6 +3,9 @@
 
 ;HungLe from gamebot.org
 Func GetResources() ;Reads resources
+	$SearchCount += 1 ; Counter for number of searches
+	SetLog(StringFormat("%3s", $SearchCount) & "> [G]:" & StringFormat("%7s", 0) & " [E]:" & StringFormat("%7s", 0) & " [D]:" & StringFormat("%5s", 0) & " [T]:" & StringFormat("%2s", 0), $COLOR_BLACK, "Lucida Console", 7.5)
+	Return
 	Local $i = 0
 	;_CaptureRegion()
 	If _Sleep(500) Then Return
