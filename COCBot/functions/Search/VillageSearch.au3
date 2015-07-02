@@ -148,6 +148,13 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 				$msg = "Waiting for Attack Now"
 				SetLog(_PadStringCenter($msg, 50, "~"), $COLOR_ORANGE)
 				TrayTip($sBotTitle, $msg, $TIP_ICONEXCLAMATION)
+				If $i == 0 Then
+					If FileExists(@WindowsDir & "\media\Festival\Windows Exclamation.wav") Then
+						SoundPlay(@WindowsDir & "\media\Festival\Windows Exclamation.wav", 1)
+					ElseIf FileExists(@WindowsDir & "\media\Windows Exclamation.wav") Then
+						SoundPlay(@WindowsDir & "\media\Windows Exclamation.wav", 1)
+					EndIf
+				EndIf
 				If _Sleep(1000) Then ExitLoop
 				If $bBtnAttackNowPressed = True Then ExitLoop
 			EndIf
