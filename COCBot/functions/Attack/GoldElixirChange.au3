@@ -48,8 +48,8 @@ Func GoldElixirChange()
 			If ($Gold2 = "" And $Elixir2 = "") Then
 				If _Sleep(500) Then Return
 				if getGold(51, 66) = "" and getElixir(51, 66 + 29) = "" then
-					SetLog("Battle has finished", $COLOR_GREEN)
-					ExitLoop
+					;SetLog("Battle has finished", $COLOR_GREEN)
+					;ExitLoop
 				endif
 			EndIf
 			;If (GUICtrlRead($cmbBoostBarracks) > 0) And ($boostsEnabled = 1) Then $x = $sTimeStopAtk*1000
