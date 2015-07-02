@@ -65,8 +65,8 @@ Func getDigit(ByRef $x, $y, $type)
 				[0x303030, 0x050505, 0x272727]]										;9
 	EndSwitch
 
-	For $i = 1 to 1
-		For $z = 0 to 0
+	For $i = 0 to 10
+		For $z = -1 to 1
 			$x += $z
 			Local $pixel1[3] = [$x + $digitOffset[$i][0][0], $y + $digitOffset[$i][0][1], Hex($digitColor[$i][0], 6)]
 			Local $pixel2[3] = [$x + $digitOffset[$i][1][0], $y + $digitOffset[$i][1][1], Hex($digitColor[$i][1], 6)]
