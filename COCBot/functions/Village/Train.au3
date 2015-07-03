@@ -646,6 +646,7 @@ Func checkArmyCamp()
 		$BArmyPos = _PixelSearch(309, 581, 433, 583, Hex(0x4084B8, 6), 5) ;Finds Info button
 		if $icount = 10 then ExitLoop
 	wend
+   $TotalCamp = 200
    If IsArray($BArmyPos) = False Then
 	   SetLog("Your Army Camp is not available", $COLOR_RED)
 	   if $TotalCamp = "" and $TotalCamp = 0 then

@@ -1,10 +1,10 @@
 
 Func IdentifyTroopKind($SlotPos = 0)
 	; capture troopbar
-	Local $x1 = 0, $y1 = 550, $x2 = 860, $y2 = 660, $SlotComp
+	Local $x1 = 0, $y1 = 600, $x2 = 860, $y2 = 660, $SlotComp
 	_CaptureRegion($x1, $y1, $x2, $y2)
 
-  If _ColorCheck(_GetPixelColor(828, 573 - $y1), Hex(0x70B3D8, 6), 10) Then; Check pixelcolor for Slot 11 # same color for all troops or spells
+  If _ColorCheck(_GetPixelColor(828, 623 - $y1), Hex(0x70B3D8, 6), 10) Then; Check pixelcolor for Slot 11 # same color for all troops or spells
             ; compensate for slotlocation
             Switch $SlotPos
                 Case 0 To 2, 4 To 7
@@ -22,8 +22,8 @@ Func IdentifyTroopKind($SlotPos = 0)
         EndIf
 
 ; Test for Troops
-	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 595 - $y1), Hex(0xF8B020, 6), 10) Then Return $eBarb	;Check if slot is Barbarian
-	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 595 - $y1), Hex(0xD83F68, 6), 10) Then Return $eArch		;Check if slot is Archer
+	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 645 - $y1), Hex(0xFCACA8, 6), 10) Then Return $eBarb	;Check if slot is Barbarian
+	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 645 - $y1), Hex(0x4A271F, 6), 10) Then Return $eArch		;Check if slot is Archer
 	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 595 - $y1), Hex(0x80CE50, 6), 10) Then Return $eGobl		;Check if slot is Goblin
 	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 595 - $y1), Hex(0xF8D8A0, 6), 10) Then Return $eGiant		;Check if slot is Giant
 	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 595 - $y1), Hex(0x60A4D0, 6), 20) And _
@@ -49,12 +49,12 @@ Func IdentifyTroopKind($SlotPos = 0)
 	   _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 617 - $y1), Hex(0x535145, 6), 10) Then Return $eLava	;Check if slot is Lava Hound
 
 	;Test for ClanCastle
-	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 592 - $y1), Hex(0xf4d05e, 6), 10) and _
-	   _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 586 - $y1), Hex(0x69a8d1, 6), 20) Then Return $eCastle		;Check if slot is Clan Castle
+	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 642 - $y1), Hex(0xE8DF45, 6), 10) and _
+	   _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 636 - $y1), Hex(0xE9E245, 6), 20) Then Return $eCastle		;Check if slot is Clan Castle
 	;If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 585 - $y1), Hex(0x68ACD2, 6), 10) Then Return $eCastle		;Check if slot is Clan Castle
 
 	;Test for Heroes
-	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 595 - $y1), Hex(0xF8EB79, 6), 10) Then Return $eKing		;Check if slot is King
+	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 645 - $y1), Hex(0x2C2626, 6), 10) Then Return $eKing		;Check if slot is King
 	;If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 585 - $y1), Hex(0x662CE6, 6), 10) Then Return $eQueen		;Check if slot is Queen
     If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 585 - $y1), Hex(0x682CE8, 6), 20) And _                       ;Check if slot is Queen crown
 	   _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 575 - $y1), Hex(0xDBA328, 6), 20) Then Return $eQueen        ; and Check if slot is Queen
