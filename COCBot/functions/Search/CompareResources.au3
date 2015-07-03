@@ -2,6 +2,7 @@
 ;Every 20 searches, it will decrease minimum by certain amounts.
 
 Func CompareResources() ;Compares resources and returns true if conditions meet, otherwise returns false
+
 	Return True
 	If $iChkSearchReduction = 1 Then
 		If $SearchCount <> 0 And Mod($SearchCount, $ReduceCount) = 0 Then
