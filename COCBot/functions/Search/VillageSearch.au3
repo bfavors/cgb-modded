@@ -141,7 +141,7 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 			If CheckZoomOut() = False Then Return
 		EndIf
 
-		If CompareResources() Then
+		If CompareResources() And Not $isSnipeWhileTrain Then
 			If $bBtnAttackNowPressed = True Then ExitLoop
 			If $iradAttackMode = 0 Or $iradAttackMode = 1 Then
 				If checkDeadBase() Then
