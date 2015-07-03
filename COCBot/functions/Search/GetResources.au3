@@ -3,9 +3,36 @@
 
 ;HungLe from gamebot.org
 Func GetResources() ;Reads resources
+
+	Local $THString = ""
+    $searchTH = "-"
+	If ($OptBullyMode = 1 And $SearchCount >= $ATBullyMode) Or $OptTrophyMode = 1 Or $chkConditions[4] = 1 Or $chkConditions[5] = 1 Then
+		If $chkConditions[5] = 1 Or $OptTrophyMode = 1 Then
+			$searchTH = checkTownhallADV()
+		Else
+			$searchTH = checkTownhall()
+		EndIf
+
+		If SearchTownHallLoc() = False And $searchTH <> "-" Then
+			$THLoc = "In"
+		ElseIf $searchTH <> "-" Then
+			$THLoc = "Out"
+		Else
+			$THLoc = $searchTH
+			$THx = 0
+			$THy = 0
+		EndIf
+		$THString = " [TH]:" & StringFormat("%2s", $searchTH) & ", " & $THLoc
+	EndIf
+
+	$searchGold = 0
+	$searchElixir = 0
+	$searchDark = 0
+	$searchTrophy = 0
 	$SearchCount += 1 ; Counter for number of searches
-	SetLog(StringFormat("%3s", $SearchCount) & "> [G]:" & StringFormat("%7s", 0) & " [E]:" & StringFormat("%7s", 0) & " [D]:" & StringFormat("%5s", 0) & " [T]:" & StringFormat("%2s", 0), $COLOR_BLACK, "Lucida Console", 7.5)
+	SetLog(StringFormat("%3s", $SearchCount) & "> [G]:" & StringFormat("%7s", $searchGold) & " [E]:" & StringFormat("%7s", $searchElixir) & " [D]:" & StringFormat("%5s", $searchDark) & " [T]:" & StringFormat("%2s", $searchTrophy) & $THString, $COLOR_BLACK, "Lucida Console", 7.5)
 	Return
+
 	Local $i = 0
 	;_CaptureRegion()
 	If _Sleep(500) Then Return
@@ -82,29 +109,5 @@ Func GetResources() ;Reads resources
 		$searchDark = 0
 		$searchTrophy = getTrophy(51, 66 + 60)
 	EndIf
-
-	Local $THString = ""
-    $searchTH = "-"
-	If ($OptBullyMode = 1 And $SearchCount >= $ATBullyMode) Or $OptTrophyMode = 1 Or $chkConditions[4] = 1 Or $chkConditions[5] = 1 Then
-		If $chkConditions[5] = 1 Or $OptTrophyMode = 1 Then
-			$searchTH = checkTownhallADV()
-		Else
-			$searchTH = checkTownhall()
-		EndIf
-
-		If SearchTownHallLoc() = False And $searchTH <> "-" Then
-			$THLoc = "In"
-		ElseIf $searchTH <> "-" Then
-			$THLoc = "Out"
-		Else
-			$THLoc = $searchTH
-			$THx = 0
-			$THy = 0
-		EndIf
-		$THString = " [TH]:" & StringFormat("%2s", $searchTH) & ", " & $THLoc
-	EndIf
-
-	$SearchCount += 1 ; Counter for number of searches
-	SetLog(StringFormat("%3s", $SearchCount) & "> [G]:" & StringFormat("%7s", $searchGold) & " [E]:" & StringFormat("%7s", $searchElixir) & " [D]:" & StringFormat("%5s", $searchDark) & " [T]:" & StringFormat("%2s", $searchTrophy) & $THString, $COLOR_BLACK, "Lucida Console", 7.5)
 
 EndFunc   ;==>GetResources

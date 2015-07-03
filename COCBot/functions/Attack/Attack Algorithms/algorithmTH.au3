@@ -222,7 +222,7 @@ If SearchTownHallLoc() And GUICtrlRead($chkAttackTH)=$GUI_CHECKED Then
    Next
 
 		 _CaptureRegion()
-    	  $TroopCountBeg=Number(getNormal(40 + (72 * $THtroop), 565))
+    	  $TroopCountBeg=100;Number(getNormal(40 + (72 * $THtroop), 565))
 
    If ($THtroop = -1) Or ($TroopCountBeg = 0) Then	SetLog("No "&$name&" troop Found!!!")
    if ($THtroop = -1) Or ($TroopCountBeg = 0) Then Return False
