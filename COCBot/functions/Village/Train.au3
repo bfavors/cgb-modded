@@ -624,6 +624,7 @@ Func TrainLightning()
 EndFunc    ;==>TrainLightning
 
 Func checkArmyCamp()
+	Return
 	SetLog("Checking Army Camp...", $COLOR_BLUE)
    If _Sleep(100) Then Return
 
