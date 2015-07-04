@@ -24,8 +24,8 @@ Func IdentifyTroopKind($SlotPos = 0)
 ; Test for Troops
 	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 645 - $y1), Hex(0xFCACA8, 6), 10) Then Return $eBarb	;Check if slot is Barbarian
 	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 645 - $y1), Hex(0x4A271F, 6), 10) Then Return $eArch		;Check if slot is Archer
-	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 595 - $y1), Hex(0x80CE50, 6), 10) Then Return $eGobl		;Check if slot is Goblin
-	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 595 - $y1), Hex(0xF8D8A0, 6), 10) Then Return $eGiant		;Check if slot is Giant
+	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 645 - $y1), Hex(0x95E858, 6), 10) Then Return $eGobl		;Check if slot is Goblin
+	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 645 - $y1), Hex(0x9B563B, 6), 10) Then Return $eGiant		;Check if slot is Giant
 	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 595 - $y1), Hex(0x60A4D0, 6), 20) And _
 			_ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 610 - $y1), Hex(0x302A2A, 6), 20) Then Return $eWall    ;322c2c Check if slot is Wallbreaker
 	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 595 - $y1), Hex(0xF8F2D1, 6), 10) Then Return $eWiza		;Check if slot is Wizard # needs 2nd check?
