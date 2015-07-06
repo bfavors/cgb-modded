@@ -20,7 +20,7 @@ Func IdentifyTroopKind($SlotPos = 0)
                     $SlotComp = 1
             EndSwitch
         EndIf
-
+	
 ; Test for Troops
 	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 645 - $y1), Hex(0xFCACA8, 6), 10) Then Return $eBarb	;Check if slot is Barbarian
 	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 645 - $y1), Hex(0x4A271F, 6), 10) Then Return $eArch		;Check if slot is Archer
@@ -56,8 +56,9 @@ Func IdentifyTroopKind($SlotPos = 0)
 	;Test for Heroes
 	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 645 - $y1), Hex(0x2C2626, 6), 10) Then Return $eKing		;Check if slot is King
 	;If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 585 - $y1), Hex(0x662CE6, 6), 10) Then Return $eQueen		;Check if slot is Queen
-    If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 585 - $y1), Hex(0x682CE8, 6), 20) And _                       ;Check if slot is Queen crown
-	   _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 575 - $y1), Hex(0xDBA328, 6), 20) Then Return $eQueen        ; and Check if slot is Queen
+	
+    If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 635 - $y1), Hex(0x201610, 6), 20) And _                       ;Check if slot is Queen crown
+	   _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 625 - $y1), Hex(0x8C4EB9, 6), 20) Then Return $eQueen        ; and Check if slot is Queen
 
 	;Test for Spells
 	If _ColorCheck(_GetPixelColor(68 + $SlotComp + (72 * $SlotPos), 632 - $y1), Hex(0x0426EC, 6), 10) Then Return $eLSpell		;Check if slot is Lightning Spell
